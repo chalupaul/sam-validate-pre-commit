@@ -1,0 +1,40 @@
+[project]
+name = "sam-validate-pre-commit"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["pre-commit", "sam", "aws sam"]
+authors = [
+    {name = "Paul Sims", email = "me@chalupaul.com"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Framework :: AWS CDK",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Version Control :: Git",
+    "Topic :: Utilities"
+
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/chalupaul/sam-validate-pre-commit"
+Repository = "git@github.com:chalupaul/sam-validate-pre-commit.git"
+Issues = "https://github.com/chalupaul/sam-validate-pre-commit/issues"
+Changelog = "https://github.com/chalupaul/sam-validate-pre-commit/blob/main/CHANGELOG.md"
+
+[project.scripts]
+sam-validate = "sam_validate_pre_commit.main:main"
+
+[build-system]
+requires = ["uv_build>=0.9.13,<0.10.0"]
+build-backend = "uv_build"

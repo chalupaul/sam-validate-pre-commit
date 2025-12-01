@@ -1,0 +1,9 @@
+- id: sam-validate
+  name: Sam Validate
+  description: runs sam validate on multiple files
+  entry: sam-validate
+  language: python
+  types: [yaml]
+  stages: [pre-commit, pre-merge-commit, manual]
+  files: ^(\.aws-sam/|template.ya*ml)
+  pass_filenames: true
