@@ -107,9 +107,8 @@ def main() -> int:
     if len(args.filenames) == 0:
         cmds.append(cmd)
     else:
-        cmds.extend(
-            [f"{cmd} -t {filename}" for filename in args.filenames],
-        )
+        built = [f"{cmd} -t {filename}" for filename in args.filenames]
+        cmds.extend(built)
 
     print(cmds)
     num_args: int = len(cmds)
