@@ -103,11 +103,13 @@ def main() -> int:
         cmd_parts.append("--lint")
 
     cmd = " ".join(cmd_parts)
+
     if len(args.filenames) == 0:
-        cmds += cmd
+        cmds.append(cmd)
     else:
-        for arg in args.filenames:
-            cmds.append(f"{cmd} -t {arg}")
+        cmds.extend(
+            [f"{cmd} -t {filename}" for filename in args.filenames],
+        )
 
     print(cmds)
     num_args: int = len(cmds)
