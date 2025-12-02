@@ -102,7 +102,7 @@ def main() -> int:
     if not args.no_lint:
         cmd_parts.append("--lint")
 
-    cmd = " ".join(cmd_parts)
+    cmd: str = " ".join(cmd_parts)
 
     if len(args.filenames) == 0:
         cmds.append(cmd)
@@ -110,7 +110,6 @@ def main() -> int:
         built = [f"{cmd} -t {filename}" for filename in args.filenames]
         cmds.extend(built)
 
-    print(cmds)
     num_args: int = len(cmds)
     with multiprocessing.Pool(processes=num_args) as pool:
         results = pool.map(run_sam, cmds)
