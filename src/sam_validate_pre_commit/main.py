@@ -29,6 +29,12 @@ def main() -> int:
         prog="sam-validate",
         description="A pre-commit hook to validate sam templates.",
     )
+    parser.add_argument(
+        "-m",
+        "--max-concurrent",
+        type=int,
+        default=0,
+    )
     parser.add_argument("-n", "--no-lint", action="store_true", default=False)
     parser.add_argument(
         "-r",
@@ -51,14 +57,16 @@ def main() -> int:
         type=str,
         default="default",
         help="environment name specifying default "
-        + "parameter values in the configuration file.",
+        + "parameter values in the configuration file. "
+        + "[default: default]",
     )
     parser.add_argument(
         "-c",
         "--config-file",
         type=str,
         default="samconfig.toml",
-        help="configuration file containing default parameter values.",
+        help="configuration file containing default parameter values. "
+        + "[default samconfig.toml]",
     )
     parser.add_argument(
         "-b",
@@ -107,11 +115,14 @@ def main() -> int:
     if len(args.filenames) == 0:
         cmds.append(cmd)
     else:
-        built = [f"{cmd} -t {filename}" for filename in args.filenames]
+        built: list[str] = [
+            f"{cmd} --template {filename}" for filename in args.filenames
+        ]
         cmds.extend(built)
 
-    num_args: int = len(cmds)
-    with multiprocessing.Pool(processes=num_args) as pool:
+    num_procs: int = len(cmds) if args.max_concurrent == 0 else args.max_concurrent
+
+    with multiprocessing.Pool(processes=num_procs) as pool:
         results = pool.map(run_sam, cmds)
         for _, res in enumerate(results):
             if res != 0:
