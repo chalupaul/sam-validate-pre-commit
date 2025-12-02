@@ -38,3 +38,12 @@ sam-validate = "sam_validate_pre_commit.main:main"
 [build-system]
 requires = ["uv_build>=0.9.13,<0.10.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.0",
+]
+
+[tool.ruff.lint]
+# Someday when i'm a real man, i'll add "DOC" and "D" to the list
+extend-select = [ "FAST", "ASYNC", "S", "FBT", "B", "A", "I", "SIM", "N", "PERF", "E", "W", "UP", "FURB", "TRY", "RUF" ]
