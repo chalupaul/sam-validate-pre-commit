@@ -82,33 +82,35 @@ def main() -> int:
     cmd_parts: list[str] = ["sam validate"]
 
     if args.region is not None:
-        cmd_parts += f"--region {args.region}"
+        cmd_parts.append(f"--region {args.region}")
 
     if args.profile is not None:
-        cmd_parts += f"--profile {args.profile}"
+        cmd_parts.append(f"--profile {args.profile}")
 
-    cmd_parts += f"--config-env {args.config_env}"
+    cmd_parts.append(f"--config-env {args.config_env}")
 
-    cmd_parts += f"--config-file {args.config_file}"
+    cmd_parts.append(f"--config-file {args.config_file}")
 
     if args.debug:
-        cmd_parts += "--debug"
+        cmd_parts.append("--debug")
 
     if args.beta_features:
-        cmd_parts += "--beta-features"
+        cmd_parts.append("--beta-features")
     else:
-        cmd_parts += "--no-beta-features"
+        cmd_parts.append("--no-beta-features")
 
     if not args.no_lint:
-        cmd_parts += "--lint"
+        cmd_parts.append("--lint")
 
     cmd = " ".join(cmd_parts)
-    if len(args.filenames) == 0:
-        cmds += cmd
-    else:
-        for arg in args.filenames:
-            cmds += f"{cmd} -t {arg}"
 
+    if len(args.filenames) == 0:
+        cmds.append(cmd)
+    else:
+        built = [f"{cmd} -t {filename}" for filename in args.filenames]
+        cmds.extend(built)
+
+    print(cmds)
     num_args: int = len(cmds)
     with multiprocessing.Pool(processes=num_args) as pool:
         results = pool.map(run_sam, cmds)
