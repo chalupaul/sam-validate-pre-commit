@@ -26,7 +26,7 @@ repos:
         args: [--fix=lf]
       - id: name-tests-test
         args: [--pytest-test-first]
-      # - id: no-commit-to-branch
+      - id: no-commit-to-branch
       - id: pretty-format-json
         args: [--autofix]
       - id: requirements-txt-fixer
