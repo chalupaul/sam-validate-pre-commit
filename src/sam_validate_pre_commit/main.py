@@ -18,9 +18,11 @@ def run_sam(command: str) -> int:
         print(result.stdout)
         if result.stderr != "":
             print(result.stderr)
-    except Exception as e:
+    except subprocess.CalledProcessError as e:
         print(f"Command failed: {command}")
         print(e.stderr)
+        print(e.stdout)
+        print(e.output)
         print(traceback.format_exc())
         return e.returncode
     return result.returncode
