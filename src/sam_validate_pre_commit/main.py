@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import multiprocessing
 import subprocess
+import traceback
 
 
 def run_sam(command: str) -> int:
@@ -17,9 +18,10 @@ def run_sam(command: str) -> int:
         print(result.stdout)
         if result.stderr != "":
             print(result.stderr)
-    except subprocess.CalledProcessError as e:
+    except Exception as e:
         print(f"Command failed: {command}")
         print(e.stderr)
+        print(traceback.format_exc())
         return e.returncode
     return result.returncode
 
